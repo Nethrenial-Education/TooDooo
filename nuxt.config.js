@@ -9,8 +9,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - too-doo',
-    title: 'TooDooo',
+    titleTemplate: '',
+    title: 'Remembrall',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -22,13 +22,18 @@ export default {
       },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    // eslint-disable-next-line no-dupe-keys
+    link: [{ rel: 'icon', type: 'image/gif', href: '/animated_favicon.gif' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/firebase.js', ssr: false },
+    { src: '~/plugins/localStorage.js' },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -38,7 +43,6 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
@@ -47,12 +51,32 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots',
   ],
+  sitemap: {
+    hostname: 'https://remembrall-nethrenial.web.app/',
+  },
+  robots: {
+    UserAgent: '*',
+    Allow: '/',
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en',
+      name: 'Remembrall',
+      short_name: 'Remembrall',
+      useWebmanifestExtension: true,
+      theme_color: '#222',
+    },
+    meta: {
+      name: 'Remembrall',
+    },
+    nativeUI: true,
+    icon: {
+      fileName: 'app.png',
     },
   },
 
@@ -75,5 +99,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    babel: {
+      configFile: './babel.config.js',
+    },
+  },
 }
