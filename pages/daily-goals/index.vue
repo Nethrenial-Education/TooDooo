@@ -212,11 +212,18 @@ export default {
     this.isLoading = false
   },
   methods: {
+    makeError(err) {
+      this.error = err
+      setTimeout(() => {
+        this.error = null
+      }, 1000)
+    },
     async login() {
       try {
         await this.$store.dispatch('login')
+        this.error = null
       } catch (error) {
-        this.error = error
+        this.makeError(error)
       }
     },
     async addTask() {

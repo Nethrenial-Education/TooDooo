@@ -67,11 +67,14 @@
             </nuxt-link>
           </div>
         </div>
-        <div v-else class="nav">
+        <div v-else-if="!isLoggedIn && !error" class="nav">
           <p class="nav">
             It seems that you're not currently logged in, please
             <v-btn dark depressed @click="login">Login</v-btn> first.
           </p>
+        </div>
+        <div v-else-if="!isLoggedIn && error" class="nav">
+          <p class="nav">{{ error }}</p>
         </div>
       </v-card>
     </v-row>
@@ -80,6 +83,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      error: null,
+    }
+  },
   computed: {
     isLoggedIn() {
       return this.$store.getters.GET_USER
